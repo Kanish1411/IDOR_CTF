@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Audit Portal — Login</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="card">
+  <span class="badge">Audit Portal</span>
+  <h2>Auditor Login</h2>
+  <div class="subtitle">Sign in with your auditor credentials</div>
+
+  {% if error %}
+    <p class="error-text">{{ error }}</p>
+  {% endif %}
+
+  <form method="POST" class="stacked">
+
+    <label>Username</label>
+    <input type="text" name="username" autocomplete="username">
+    <label>Password</label>
+    <input type="password" name="password" autocomplete="current-password">
+  
+
+  <button type="submit">Login</button>
+</form>
+</div>
+
+</body>
+</html>

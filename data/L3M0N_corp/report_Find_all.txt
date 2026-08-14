@@ -1,0 +1,4 @@
+L3M0N Corp Internal Report
+Document index: 2026-Q2
+This directory contains internal operational reports.
+Some documents may contain references to legacy systems.

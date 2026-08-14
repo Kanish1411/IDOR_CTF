@@ -1,0 +1,7 @@
+Redwood Analytics
+Operations Report
+Employees: 557
+Active projects: 28
+Infrastructure availability: 99.96%
+Major incident count: 1
+Status: Normal operations.

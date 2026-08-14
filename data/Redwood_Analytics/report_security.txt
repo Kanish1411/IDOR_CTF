@@ -1,0 +1,8 @@
+Redwood Analytics
+Security Assessment
+Critical findings: 0
+High findings: 2
+Medium findings: 4
+Last assessment: August 2026
+Remediation owner: Security Operations
+Status: Compliant with minor observations.

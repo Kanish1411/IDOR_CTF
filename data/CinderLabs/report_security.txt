@@ -1,0 +1,8 @@
+CinderLabs
+Security Assessment
+Critical findings: 0
+High findings: 1
+Medium findings: 5
+Last assessment: July 2026
+Remediation owner: Application Security
+Status: Mostly compliant.

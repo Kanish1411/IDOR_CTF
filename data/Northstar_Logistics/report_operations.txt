@@ -1,0 +1,7 @@
+Northstar Logistics
+Operations Report
+Employees: 1,904
+Active projects: 64
+Infrastructure availability: 99.81%
+Major incident count: 4
+Status: Elevated operational activity.

@@ -1,0 +1,8 @@
+Asterion Systems
+Security Assessment
+Critical findings: 0
+High findings: 2
+Medium findings: 7
+Last assessment: July 2026
+Remediation owner: Security Engineering
+Status: In progress.

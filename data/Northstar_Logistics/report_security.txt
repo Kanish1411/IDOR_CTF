@@ -1,0 +1,8 @@
+Northstar Logistics
+Security Assessment
+Critical findings: 0
+High findings: 3
+Medium findings: 9
+Last assessment: May 2026
+Remediation owner: Cyber Defense
+Status: In progress.

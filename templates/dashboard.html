@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Audit Portal — Dashboard</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="card">
+  <span class="badge">Auditor Session</span>
+  <h2>Welcome, <span>{{ company }}</span></h2>
+  <div class="subtitle">Reports available for this company</div>
+
+  <h3>Show Report</h3>
+  <form method="POST" action="{{ url_for('show_report', auditor_hash=auditor_hash) }}">
+    <select name="report_name">
+      {% for report in reports %}
+        <option value="{{ report.report_name }}">{{ report.report_name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Show</button>
+  </form>
+
+  <h3>Export Report</h3>
+  <form method="POST" action="{{ url_for('export_report', auditor_hash=auditor_hash) }}">
+    <select name="docname">
+      {% for report in reports %}
+        <option value="{{ report.report_name }}">{{ report.report_name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Export</button>
+  </form>
+
+  <div class="divider"></div>
+
+  <div class="logout-row">
+    <a href="/team">Team</a>
+    <a href="/logout">Logout</a>
+  </div>
+
+</div>
+
+</body>
+</html>

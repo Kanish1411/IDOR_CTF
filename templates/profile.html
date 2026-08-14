@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Audit Portal — Profile</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="card">
+  <span class="badge">Auditor Profile</span>
+  <h2>{{ name }}</h2>
+
+<div class="profile-grid">
+  <div class="profile-row">
+    <div class="profile-label">Auditor ID</div>
+    <div class="profile-value">{{ auditor_hash }}</div>
+  </div>
+  <div class="profile-row">
+    <div class="profile-label">Company</div>
+    <div class="profile-value">{{ company }}</div>
+  </div>
+  <div class="profile-row">
+    <div class="profile-label">Role</div>
+    <div class="profile-value">{{ role }}</div>
+  </div>
+</div>
+  <div class="logout-row">
+    <a href="/team">Back</a>
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+
+</body>
+</html>

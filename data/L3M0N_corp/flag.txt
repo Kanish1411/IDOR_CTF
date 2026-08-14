@@ -1,0 +1,1 @@
+FLAG{synthetic_company_data_demo}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Audit Portal — Team</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<!-- dev note: filtered L3M0N auditors from /team per client request. some companies just don't want to be found. -->
+ 
+<div class="card">
+  <span class="badge">Directory</span>
+  <h2>Auditors</h2>
+  <div class="subtitle">Team members across all companies</div>
+
+  <div class="bubble-list">
+  {% for u in auditors %}
+<a class="bubble" href="/team?username={{ u.username }}">{{ u.name }}</a>
+  {% endfor %}
+</div>
+<div class="divider"></div>
+<div class="logout-row">
+    <a href="/dashboard/{{ hash }}">Dashboard</a>
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+
+
+</body>
+</html>

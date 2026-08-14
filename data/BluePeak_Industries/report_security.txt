@@ -1,0 +1,8 @@
+BluePeak Industries
+Security Assessment
+Critical findings: 1
+High findings: 4
+Medium findings: 11
+Last assessment: June 2026
+Remediation owner: Infrastructure Security
+Status: Remediation required.
