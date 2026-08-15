@@ -262,6 +262,12 @@ with app.app_context():
 
         db.session.add_all(all_users)
         db.session.commit()
+        print("SEEDING COMPLETE")
+        print("USERS AFTER SEED:", User.query.count())
+        print("COMPANIES AFTER SEED:", Company.query.count())
+        print("REPORTS AFTER SEED:", Report.query.count())
+
+    print("===================================")
 
 # ---------------------------------------------------------------------------
 # Helper: kill the session and bounce to login
