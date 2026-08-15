@@ -7,10 +7,13 @@ from flask import (
 )
 from flask_jwt_extended import (
     JWTManager, create_access_token, jwt_required,
-    get_jwt_identity
+    get_jwt_identity, decode_token
 )
-
 from models import db, User, Company, Report
+
+from flask_jwt_extended import verify_jwt_in_request
+from flask_jwt_extended.exceptions import NoAuthorizationError
+
 
 app = Flask(__name__)
 
@@ -330,18 +333,33 @@ def dashboard(auditor_hash):
     if not user:
         abort(404)
     reports = Report.query.filter_by(company_id=user.company_id, hidden=False).all()
+    token = request.cookies.get(app.config["JWT_ACCESS_COOKIE_NAME"])
     return render_template(
         "dashboard.html",
         auditor_hash=auditor_hash,
         company=user.company.name,
         reports=reports,
+        token=token,
     )
+from flask_jwt_extended import decode_token
+from flask_jwt_extended.exceptions import JWTDecodeError
+from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 
 
 @app.route("/dashboard/<auditor_hash>/show", methods=["POST"])
-@jwt_required()
 def show_report(auditor_hash):
-    current_user_id = get_jwt_identity()  # UUID string, no int() cast
+    token = request.form.get("token")
+    if not token:
+        return jsonify({
+            "error": "Missing 'token' field. This endpoint requires the JWT to be sent explicitly in the request body."
+        }), 401
+
+    try:
+        decoded = decode_token(token)
+    except (ExpiredSignatureError, InvalidTokenError, JWTDecodeError):
+        return force_logout_redirect("Invalid or expired token. Please log in again.")
+
+    current_user_id = decoded["sub"]
     current_user = User.query.get(current_user_id)
     target_user = User.query.get(auditor_hash)
     if not current_user or not target_user:
