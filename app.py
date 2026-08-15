@@ -262,13 +262,53 @@ with app.app_context():
 
         db.session.add_all(all_users)
         db.session.commit()
+
+        # Reports
+        FOLDER_TO_COMPANY = {
+            "Asterion_Systems": asterion,
+            "BluePeak_Industries": bluepeak,
+            "CinderLabs": cinderlabs,
+            "Northstar_Logistics": northstar,
+            "Redwood_Analytics": redwood,
+            "L3M0N_corp": lemon_co,
+        }
+
+        HIDDEN_NAMES = {"flag.txt"}
+
+        data_dir = os.path.join(BASE_DIR, "data")
+
+        for folder_name, company in FOLDER_TO_COMPANY.items():
+
+            folder_path = os.path.join(data_dir, folder_name)
+
+            print("Checking:", folder_path)
+
+            if not os.path.isdir(folder_path):
+                print("Missing data folder:", folder_path)
+                continue
+
+            for filename in os.listdir(folder_path):
+
+                if not filename.endswith(".txt"):
+                    continue
+
+                file_path = os.path.join(folder_path, filename)
+
+                db.session.add(
+                    Report(
+                        report_name=filename,
+                        report_path=file_path,
+                        company_id=company.id,
+                        hidden=filename in HIDDEN_NAMES,
+                    )
+                )
+
+        db.session.commit()
+
         print("SEEDING COMPLETE")
         print("USERS AFTER SEED:", User.query.count())
         print("COMPANIES AFTER SEED:", Company.query.count())
         print("REPORTS AFTER SEED:", Report.query.count())
-
-    print("===================================")
-
 # ---------------------------------------------------------------------------
 # Helper: kill the session and bounce to login
 # ---------------------------------------------------------------------------
