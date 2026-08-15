@@ -13,32 +13,24 @@
 
   <div class="profile-grid">
 
-    <div class="profile-row">
-      <div class="profile-label">Auditor ID</div>
-      <div class="profile-value">{{ auditor_hash }}</div>
-    </div>
-
-    <div class="profile-row">
-      <div class="profile-label">Company</div>
-      <div class="profile-value">{{ company }}</div>
-    </div>
-
-    <div class="profile-row">
-      <div class="profile-label">Role</div>
-      <div class="profile-value">{{ role }}</div>
-    </div>
-
-    <div class="profile-row">
-      <div class="profile-label">Chief Auditor</div>
-      <div class="profile-value">
-        {% if chief %}
-          {{ chief }}
-        {% else %}
-          —
-        {% endif %}
+    {% if empty %}
+  <div class="subtitle">No auditor found for "{{ query_value }}".</div>
+    {% else %}
+      <div class="profile-grid">
+        <div class="profile-row">
+          <div class="profile-label">Auditor ID</div>
+          <div class="profile-value">{{ auditor_hash }}</div>
+        </div>
+        <div class="profile-row">
+          <div class="profile-label">Company</div>
+          <div class="profile-value">{{ company }}</div>
+        </div>
+        <div class="profile-row">
+          <div class="profile-label">Role</div>
+          <div class="profile-value">{{ role }}</div>
+        </div>
       </div>
-    </div>
-
+    {% endif %}
   </div>
 
   <div class="logout-row">

@@ -28,6 +28,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 jwt = JWTManager(app)
 
+
 def force_logout_redirect(error=None):
     resp = redirect(url_for("login", error=error) if error else url_for("login"))
     resp.delete_cookie(app.config["JWT_ACCESS_COOKIE_NAME"])
@@ -48,8 +49,9 @@ def handle_invalid_token(reason):
 def handle_missing_token(reason):
     return force_logout_redirect("Please log in to continue.")
 
+
 # ---------------------------------------------------------------------------
-# Seed data (unchanged)
+# Seed data
 # ---------------------------------------------------------------------------
 with app.app_context():
     print("===================================")
@@ -86,168 +88,97 @@ with app.app_context():
         db.session.commit()
 
         # ---------------------------------------------------------------
-        # Users
+        # Users -- id is no longer passed manually; models.py generates a
+        # UUID automatically for each User via default=generate_uuid
         # ---------------------------------------------------------------
         asterion_users = [
             User(
-                username="jake",
-                password="jake123",
-                name="Jake",
-                role="Assistant Auditor",
-                chief="Alex",
-                company_id=asterion.id,
+                username="jake", password="jake123", name="Jake",
+                role="Assistant Auditor", chief="Alex", company_id=asterion.id,
             ),
             User(
-                username="sarah",
-                password="sarah123",
-                name="Sarah",
-                role="Senior Auditor",
-                chief="Alex",
-                company_id=asterion.id,
+                username="sarah", password="sarah123", name="Sarah",
+                role="Senior Auditor", chief="Alex", company_id=asterion.id,
             ),
             User(
-                username="alex",
-                password="alex123",
-                name="Alex",
-                role="Chief Auditor",
-                chief=None,
-                company_id=asterion.id,
+                username="alex", password="alex123", name="Alex",
+                role="Chief Auditor", chief=None, company_id=asterion.id,
             ),
         ]
 
         bluepeak_users = [
             User(
-                username="ryan",
-                password="ryan123",
-                name="Ryan",
-                role="Assistant Auditor",
-                chief="Brian",
-                company_id=bluepeak.id,
+                username="ryan", password="ryan123", name="Ryan",
+                role="Assistant Auditor", chief="Brian", company_id=bluepeak.id,
             ),
             User(
-                username="olivia",
-                password="olivia123",
-                name="Olivia",
-                role="Senior Auditor",
-                chief="Brian",
-                company_id=bluepeak.id,
+                username="olivia", password="olivia123", name="Olivia",
+                role="Senior Auditor", chief="Brian", company_id=bluepeak.id,
             ),
             User(
-                username="brian",
-                password="brian123",
-                name="Brian",
-                role="Chief Auditor",
-                chief=None,
-                company_id=bluepeak.id,
+                username="brian", password="brian123", name="Brian",
+                role="Chief Auditor", chief=None, company_id=bluepeak.id,
             ),
         ]
 
         cinder_users = [
             User(
-                username="daniel",
-                password="daniel123",
-                name="Daniel",
-                role="Assistant Auditor",
-                chief="Chris",
-                company_id=cinderlabs.id,
+                username="daniel", password="daniel123", name="Daniel",
+                role="Assistant Auditor", chief="Chris", company_id=cinderlabs.id,
             ),
             User(
-                username="maya",
-                password="maya123",
-                name="Maya",
-                role="Senior Auditor",
-                chief="Chris",
-                company_id=cinderlabs.id,
+                username="maya", password="maya123", name="Maya",
+                role="Senior Auditor", chief="Chris", company_id=cinderlabs.id,
             ),
             User(
-                username="chris",
-                password="chris123",
-                name="Chris",
-                role="Chief Auditor",
-                chief=None,
-                company_id=cinderlabs.id,
+                username="chris", password="chris123", name="Chris",
+                role="Chief Auditor", chief=None, company_id=cinderlabs.id,
             ),
         ]
 
         northstar_users = [
             User(
-                username="sam",
-                password="sam123",
-                name="Sam",
-                role="Assistant Auditor",
-                chief="David",
-                company_id=northstar.id,
+                username="sam", password="sam123", name="Sam",
+                role="Assistant Auditor", chief="David", company_id=northstar.id,
             ),
             User(
-                username="laura",
-                password="laura123",
-                name="Laura",
-                role="Senior Auditor",
-                chief="David",
-                company_id=northstar.id,
+                username="laura", password="laura123", name="Laura",
+                role="Senior Auditor", chief="David", company_id=northstar.id,
             ),
             User(
-                username="david",
-                password="david123",
-                name="David",
-                role="Chief Auditor",
-                chief=None,
-                company_id=northstar.id,
+                username="david", password="david123", name="David",
+                role="Chief Auditor", chief=None, company_id=northstar.id,
             ),
         ]
 
         redwood_users = [
             User(
-                username="lily",
-                password="lily123",
-                name="Lily",
-                role="Assistant Auditor",
-                chief="Emma",
-                company_id=redwood.id,
+                username="lily", password="lily123", name="Lily",
+                role="Assistant Auditor", chief="Emma", company_id=redwood.id,
             ),
             User(
-                username="noah",
-                password="noah123",
-                name="Noah",
-                role="Senior Auditor",
-                chief="Emma",
-                company_id=redwood.id,
+                username="noah", password="noah123", name="Noah",
+                role="Senior Auditor", chief="Emma", company_id=redwood.id,
             ),
             User(
-                username="emma",
-                password="emma123",
-                name="Emma",
-                role="Chief Auditor",
-                chief=None,
-                company_id=redwood.id,
+                username="emma", password="emma123", name="Emma",
+                role="Chief Auditor", chief=None, company_id=redwood.id,
             ),
         ]
 
         # L3M0N Corp
         lemon_users = [
             User(
-                username="mia",
-                password="mia123",
-                name="Mia",
-                role="Assistant Auditor",
-                chief="John",
-                company_id=lemon_co.id,
+                username="mia", password="mia123", name="Mia",
+                role="Assistant Auditor", chief="John", company_id=lemon_co.id,
             ),
             User(
-                username="victor",
-                password="victor123",
-                name="Victor",
-                role="Senior Auditor",
-                chief="John",
-                company_id=lemon_co.id,
+                username="victor", password="victor123", name="Victor",
+                role="Senior Auditor", chief="John", company_id=lemon_co.id,
             ),
             User(
-                username="john",
-                password="john123",
-                name="John",
-                role="Chief Auditor",
-                chief=None,
-                company_id=lemon_co.id,
+                username="john", password="john123", name="John",
+                role="Chief Auditor", chief=None, company_id=lemon_co.id,
             ),
         ]
 
@@ -263,7 +194,9 @@ with app.app_context():
         db.session.add_all(all_users)
         db.session.commit()
 
+        # ---------------------------------------------------------------
         # Reports
+        # ---------------------------------------------------------------
         FOLDER_TO_COMPANY = {
             "Asterion_Systems": asterion,
             "BluePeak_Industries": bluepeak,
@@ -278,9 +211,7 @@ with app.app_context():
         data_dir = os.path.join(BASE_DIR, "data")
 
         for folder_name, company in FOLDER_TO_COMPANY.items():
-
             folder_path = os.path.join(data_dir, folder_name)
-
             print("Checking:", folder_path)
 
             if not os.path.isdir(folder_path):
@@ -288,7 +219,6 @@ with app.app_context():
                 continue
 
             for filename in os.listdir(folder_path):
-
                 if not filename.endswith(".txt"):
                     continue
 
@@ -309,15 +239,6 @@ with app.app_context():
         print("USERS AFTER SEED:", User.query.count())
         print("COMPANIES AFTER SEED:", Company.query.count())
         print("REPORTS AFTER SEED:", Report.query.count())
-# ---------------------------------------------------------------------------
-# Helper: kill the session and bounce to login
-# ---------------------------------------------------------------------------
-def force_logout_redirect(error=None):
-    resp = redirect(url_for("login"))
-    resp.delete_cookie(app.config["JWT_ACCESS_COOKIE_NAME"])
-    if error:
-        resp = redirect(url_for("login", error=error))
-    return resp
 
 
 # ---------------------------------------------------------------------------
@@ -338,13 +259,12 @@ def login():
         password = request.form["password"]
         user = User.query.filter_by(username=username, password=password).first()
         if user:
-            token = create_access_token(identity=str(user.id))
+            token = create_access_token(identity=user.id)  # already a UUID string
             resp = redirect(url_for("dashboard", auditor_hash=user.id))
             resp.set_cookie("access_token", token)
             return resp
         return render_template("login.html", error="Invalid username or password.")
 
-    # GET: may have arrived here via a redirect carrying an error message
     error = request.args.get("error")
     return render_template("login.html", error=error)
 
@@ -357,12 +277,11 @@ def logout():
 @app.route("/team")
 @jwt_required()
 def team():
-    current_user_id = int(get_jwt_identity())
+    current_user_id = get_jwt_identity()
 
     username = request.args.get("username")
     company = request.args.get("company")
 
-    # Profile-lookup mode: a specific auditor was requested
     if username or company:
         user = None
         if username:
@@ -371,11 +290,12 @@ def team():
             user = User.query.join(Company).filter(Company.name.ilike(company)).first()
 
         if not user:
-            abort(404)
+            return render_template(
+                "profile.html",
+                empty=True,
+                query_value="Company =" + (username or company),
+            )
 
-        # INTENTIONAL: no check that get_jwt_identity() == this user -- any
-        # logged-in auditor can look up any other auditor's profile, including
-        # their id (the real auditor hash) and company.
         return render_template(
             "profile.html",
             name=user.name,
@@ -421,15 +341,12 @@ def dashboard(auditor_hash):
 @app.route("/dashboard/<auditor_hash>/show", methods=["POST"])
 @jwt_required()
 def show_report(auditor_hash):
-    current_user_id = int(get_jwt_identity())
+    current_user_id = get_jwt_identity()  # UUID string, no int() cast
     current_user = User.query.get(current_user_id)
     target_user = User.query.get(auditor_hash)
     if not current_user or not target_user:
         abort(404)
 
-    # FORBIDDEN ACCESS: caller's company doesn't match the dashboard's
-    # company -> kill the session and send them back to login, instead of
-    # just redirecting while leaving them logged in.
     if current_user.company_id != target_user.company_id:
         return force_logout_redirect("You don't have access to that company's dashboard.")
 
@@ -473,12 +390,14 @@ def export_report(auditor_hash):
 
     if not rows:
         abort(404)
+
     for row in rows:
         if row["report_name"] == "flag.txt":
             if target_user.role != "Chief Auditor":
                 return jsonify({
                     "error": "This report is restricted to the Chief Auditor"
                 }), 403
+
     if len(rows) > 1:
         return jsonify([
             {"report_name": r["report_name"]} for r in rows
