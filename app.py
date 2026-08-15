@@ -79,6 +79,7 @@ with app.app_context():
         northstar = Company(name="Northstar Logistics")
         redwood = Company(name="Redwood Analytics")
         lemon_co = Company(name="L3M0N_corp")
+        auditor_co = Company(name="Auditor Co")  # home company for self-registered visitors
 
         db.session.add_all([
             asterion,
@@ -86,7 +87,8 @@ with app.app_context():
             cinderlabs,
             northstar,
             redwood,
-            lemon_co
+            lemon_co,
+            auditor_co,
         ])
         db.session.commit()
 
@@ -207,6 +209,7 @@ with app.app_context():
             "Northstar_Logistics": northstar,
             "Redwood_Analytics": redwood,
             "L3M0N_corp": lemon_co,
+            "Auditor_Co": auditor_co,
         }
 
         HIDDEN_NAMES = {"flag.txt"}
@@ -288,15 +291,17 @@ def team():
     if username or company:
         user = None
         if username:
-            user = User.query.filter_by(username=username).first()
+            username=username.strip().lower()
+            user = User.query.filter_by(username=username).filter(User.role != "Visitor").first()
         elif company:
+            company=company.strip().lower()
             user = User.query.join(Company).filter(Company.name.ilike(company)).first()
 
         if not user:
             return render_template(
                 "profile.html",
                 empty=True,
-                query_value="Company =" + (username or company),
+                query_value="company=" + (username or company),
             )
 
         return render_template(
@@ -312,7 +317,7 @@ def team():
     auditors = (
         User.query
         .join(Company)
-        .filter(Company.name != "L3M0N_corp")
+        .filter(Company.name != "L3M0N_corp").filter(User.role != "Visitor")
         .with_entities(User.name, User.username, User.id)
         .order_by(User.name)
         .all()
@@ -377,7 +382,13 @@ def show_report(auditor_hash):
 
     with open(report.report_path) as f:
         content = f.read()
-    return jsonify({"report_name": report.report_name, "content": content})
+
+    return render_template(
+        "report_view.html",
+        report_name=report.report_name,
+        content=content,
+        auditor_hash=auditor_hash,
+    )
 
 
 @app.route("/dashboard/<auditor_hash>/export", methods=["POST"])
@@ -424,6 +435,42 @@ def export_report(auditor_hash):
     row = rows[0]
     return send_file(row["report_path"], as_attachment=True,
                       download_name=row["report_name"])
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username = request.form.get("username", "").strip()
+        password = request.form.get("password", "")
+        name = request.form.get("name", "").strip()
+
+        if not username or not password or not name:
+            return render_template("register.html", error="All fields are required.")
+
+        if User.query.filter_by(username=username).first():
+            return render_template("register.html", error="That username is already taken.")
+
+        auditor_co = Company.query.filter_by(name="Auditor Co").first()
+        if not auditor_co:
+            return render_template("register.html", error="Registration is temporarily unavailable.")
+
+        new_user = User(
+            username=username,
+            password=password,
+            name=name,
+            role="Visitor",
+            chief=None,
+            company_id=auditor_co.id,
+        )
+        db.session.add(new_user)
+        db.session.commit()
+
+        token = create_access_token(identity=new_user.id)
+        resp = redirect(url_for("dashboard", auditor_hash=new_user.id))
+        resp.set_cookie("access_token", token)
+        return resp
+
+    return render_template("register.html", error=None)
 
 
 if __name__ == "__main__":

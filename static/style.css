@@ -1,12 +1,12 @@
 :root {
-  --bg: #0f1115;
-  --panel: #171a21;
-  --panel-border: #262b36;
-  --text: #e6e8ec;
-  --muted: #8b93a3;
-  --accent: #4f8cff;
-  --accent-hover: #3a76e8;
-  --danger: #ff5c5c;
+  --bg: #131210;
+  --panel: #1c1a17;
+  --panel-border: #302c26;
+  --text: #ece7de;
+  --muted: #948a7a;
+  --accent: #d68c45;
+  --accent-hover: #c17a35;
+  --danger: #d1584a;
 }
 
 * { box-sizing: border-box; }
@@ -27,9 +27,9 @@ body {
   max-width: 480px;
   background: var(--panel);
   border: 1px solid var(--panel-border);
-  border-radius: 12px;
+  border-radius: 6px;
   padding: 32px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 34px rgba(0,0,0,0.5);
 }
 
 .badge {
@@ -38,10 +38,10 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent);
-  background: rgba(79,140,255,0.12);
-  border: 1px solid rgba(79,140,255,0.3);
+  background: rgba(214,140,69,0.12);
+  border: 1px solid rgba(214,140,69,0.3);
   padding: 4px 10px;
-  border-radius: 999px;
+  border-radius: 3px;
   margin-bottom: 14px;
 }
 
@@ -81,10 +81,10 @@ input[type="text"],
 input[type="password"],
 select {
   flex: 1;
-  background: #10131a;
+  background: #100f0d;
   color: var(--text);
   border: 1px solid var(--panel-border);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 10px 12px;
   font-size: 14px;
   outline: none;
@@ -98,9 +98,9 @@ select:focus {
 
 button {
   background: var(--accent);
-  color: white;
+  color: #131210;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 10px 18px;
   font-size: 14px;
   font-weight: 600;
@@ -135,24 +135,6 @@ button:hover {
   text-decoration: underline;
 }
 
-/* Utility classes for pages beyond the dashboard */
-
-.list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.list li {
-  padding: 10px 0;
-  border-bottom: 1px solid var(--panel-border);
-  font-size: 14px;
-}
-
-.list li:last-child {
-  border-bottom: none;
-}
-
 .error-text {
   color: var(--danger);
   font-size: 13px;
@@ -171,9 +153,6 @@ button:hover {
   margin-bottom: 6px;
 }
 
-.field form {
-  margin-bottom: 0;
-}
 .bubble-list {
   display: flex;
   flex-wrap: wrap;
@@ -183,9 +162,9 @@ button:hover {
 .bubble {
   display: inline-block;
   padding: 8px 16px;
-  background: #10131a;
+  background: #100f0d;
   border: 1px solid var(--panel-border);
-  border-radius: 999px;
+  border-radius: 4px;
   color: var(--text);
   text-decoration: none;
   font-size: 14px;
@@ -194,7 +173,7 @@ button:hover {
 
 .bubble:hover {
   border-color: var(--accent);
-  background: rgba(79,140,255,0.08);
+  background: rgba(214,140,69,0.08);
   color: var(--accent);
 }
 form.stacked {
@@ -226,4 +205,21 @@ form.stacked {
   color: var(--text);
   font-size: 14px;
   font-family: 'Courier New', monospace;
+}
+.report-content {
+  background: #100f0d;
+  border: 1px solid var(--panel-border);
+  border-radius: 4px;
+  padding: 16px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.card.wide {
+  max-width: 800px;
 }

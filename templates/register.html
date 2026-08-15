@@ -2,34 +2,35 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Audit Portal — Login</title>
+<title>Audit Portal — Register</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
 <div class="card">
   <span class="badge">Audit Portal</span>
-  <h2>Auditor Login</h2>
-  <div class="subtitle">Sign in with your auditor credentials</div>
+  <h2>Create Account</h2>
+  <div class="subtitle">Sign up as a new auditor</div>
 
   {% if error %}
     <p class="error-text">{{ error }}</p>
   {% endif %}
 
   <form method="POST" class="stacked">
+      <label>Full Name</label>
+      <input type="text" name="name" autocomplete="name">
       <label>Username</label>
       <input type="text" name="username" autocomplete="username">
-
       <label>Password</label>
-      <input type="password" name="password" autocomplete="current-password">
+      <input type="password" name="password" autocomplete="new-password">
 
-    <button type="submit">Login</button>
+    <button type="submit">Register</button>
   </form>
 
   <div class="divider"></div>
 
   <div class="logout-row">
-    <a href="{{ url_for('register') }}">Create an account</a>
+    <a href="{{ url_for('login') }}">Already have an account? Log in</a>
   </div>
 </div>
 
