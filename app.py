@@ -52,9 +52,19 @@ def handle_missing_token(reason):
 # Seed data (unchanged)
 # ---------------------------------------------------------------------------
 with app.app_context():
+    print("===================================")
+    print("DATABASE PATH:", DB_PATH)
+    print("DATABASE EXISTS BEFORE:", os.path.exists(DB_PATH))
+
     db.create_all()
 
+    print("DATABASE EXISTS AFTER:", os.path.exists(DB_PATH))
+    print("USERS:", User.query.count())
+    print("COMPANIES:", Company.query.count())
+    print("REPORTS:", Report.query.count())
+
     if User.query.count() == 0:
+        print("SEEDING DATABASE...")
         # ---------------------------------------------------------------
         # Companies
         # ---------------------------------------------------------------
