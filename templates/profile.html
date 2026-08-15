@@ -11,20 +11,36 @@
   <span class="badge">Auditor Profile</span>
   <h2>{{ name }}</h2>
 
-<div class="profile-grid">
-  <div class="profile-row">
-    <div class="profile-label">Auditor ID</div>
-    <div class="profile-value">{{ auditor_hash }}</div>
+  <div class="profile-grid">
+
+    <div class="profile-row">
+      <div class="profile-label">Auditor ID</div>
+      <div class="profile-value">{{ auditor_hash }}</div>
+    </div>
+
+    <div class="profile-row">
+      <div class="profile-label">Company</div>
+      <div class="profile-value">{{ company }}</div>
+    </div>
+
+    <div class="profile-row">
+      <div class="profile-label">Role</div>
+      <div class="profile-value">{{ role }}</div>
+    </div>
+
+    <div class="profile-row">
+      <div class="profile-label">Chief Auditor</div>
+      <div class="profile-value">
+        {% if chief %}
+          {{ chief }}
+        {% else %}
+          —
+        {% endif %}
+      </div>
+    </div>
+
   </div>
-  <div class="profile-row">
-    <div class="profile-label">Company</div>
-    <div class="profile-value">{{ company }}</div>
-  </div>
-  <div class="profile-row">
-    <div class="profile-label">Role</div>
-    <div class="profile-value">{{ role }}</div>
-  </div>
-</div>
+
   <div class="logout-row">
     <a href="/team">Back</a>
     <a href="/logout">Logout</a>

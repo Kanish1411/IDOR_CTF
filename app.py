@@ -78,100 +78,179 @@ with app.app_context():
         # ---------------------------------------------------------------
         # Users
         # ---------------------------------------------------------------
-        asterion_user = User(
-            username="alex",
-            password="alex123",
-            name="Alex",
-            company_id=asterion.id,
+        asterion_users = [
+            User(
+                username="jake",
+                password="jake123",
+                name="Jake",
+                role="Assistant Auditor",
+                chief="Alex",
+                company_id=asterion.id,
+            ),
+            User(
+                username="sarah",
+                password="sarah123",
+                name="Sarah",
+                role="Senior Auditor",
+                chief="Alex",
+                company_id=asterion.id,
+            ),
+            User(
+                username="alex",
+                password="alex123",
+                name="Alex",
+                role="Chief Auditor",
+                chief=None,
+                company_id=asterion.id,
+            ),
+        ]
+
+        bluepeak_users = [
+            User(
+                username="ryan",
+                password="ryan123",
+                name="Ryan",
+                role="Assistant Auditor",
+                chief="Brian",
+                company_id=bluepeak.id,
+            ),
+            User(
+                username="olivia",
+                password="olivia123",
+                name="Olivia",
+                role="Senior Auditor",
+                chief="Brian",
+                company_id=bluepeak.id,
+            ),
+            User(
+                username="brian",
+                password="brian123",
+                name="Brian",
+                role="Chief Auditor",
+                chief=None,
+                company_id=bluepeak.id,
+            ),
+        ]
+
+        cinder_users = [
+            User(
+                username="daniel",
+                password="daniel123",
+                name="Daniel",
+                role="Assistant Auditor",
+                chief="Chris",
+                company_id=cinderlabs.id,
+            ),
+            User(
+                username="maya",
+                password="maya123",
+                name="Maya",
+                role="Senior Auditor",
+                chief="Chris",
+                company_id=cinderlabs.id,
+            ),
+            User(
+                username="chris",
+                password="chris123",
+                name="Chris",
+                role="Chief Auditor",
+                chief=None,
+                company_id=cinderlabs.id,
+            ),
+        ]
+
+        northstar_users = [
+            User(
+                username="sam",
+                password="sam123",
+                name="Sam",
+                role="Assistant Auditor",
+                chief="David",
+                company_id=northstar.id,
+            ),
+            User(
+                username="laura",
+                password="laura123",
+                name="Laura",
+                role="Senior Auditor",
+                chief="David",
+                company_id=northstar.id,
+            ),
+            User(
+                username="david",
+                password="david123",
+                name="David",
+                role="Chief Auditor",
+                chief=None,
+                company_id=northstar.id,
+            ),
+        ]
+
+        redwood_users = [
+            User(
+                username="lily",
+                password="lily123",
+                name="Lily",
+                role="Assistant Auditor",
+                chief="Emma",
+                company_id=redwood.id,
+            ),
+            User(
+                username="noah",
+                password="noah123",
+                name="Noah",
+                role="Senior Auditor",
+                chief="Emma",
+                company_id=redwood.id,
+            ),
+            User(
+                username="emma",
+                password="emma123",
+                name="Emma",
+                role="Chief Auditor",
+                chief=None,
+                company_id=redwood.id,
+            ),
+        ]
+
+        # L3M0N Corp
+        lemon_users = [
+            User(
+                username="mia",
+                password="mia123",
+                name="Mia",
+                role="Assistant Auditor",
+                chief="John",
+                company_id=lemon_co.id,
+            ),
+            User(
+                username="victor",
+                password="victor123",
+                name="Victor",
+                role="Senior Auditor",
+                chief="John",
+                company_id=lemon_co.id,
+            ),
+            User(
+                username="john",
+                password="john123",
+                name="John",
+                role="Chief Auditor",
+                chief=None,
+                company_id=lemon_co.id,
+            ),
+        ]
+
+        all_users = (
+            asterion_users
+            + bluepeak_users
+            + cinder_users
+            + northstar_users
+            + redwood_users
+            + lemon_users
         )
 
-        bluepeak_user = User(
-            username="brian",
-            password="brian123",
-            name="Brian",
-            company_id=bluepeak.id,
-        )
-
-        cinder_user = User(
-            username="chris",
-            password="chris123",
-            name="Chris",
-            company_id=cinderlabs.id,
-        )
-
-        northstar_user = User(
-            username="david",
-            password="david123",
-            name="David",
-            company_id=northstar.id,
-        )
-
-        redwood_user = User(
-            username="emma",
-            password="emma123",
-            name="Emma",
-            company_id=redwood.id,
-        )
-
-        # Main L3M0N auditor
-        lemon_user = User(
-            username="john",
-            password="john123",
-            name="John",
-            company_id=lemon_co.id,
-        )
-
-        db.session.add_all([
-            asterion_user,
-            bluepeak_user,
-            cinder_user,
-            northstar_user,
-            redwood_user,
-            lemon_user
-        ])
-        db.session.commit()
-
-        # ---------------------------------------------------------------
-        # Auto-discover reports from the data/ directory.
-        #
-        # Folder name -> Company mapping.
-        # Every .txt file inside a mapped folder becomes a Report row.
-        #
-        # flag.txt is hidden from the normal dashboard listing.
-        # ---------------------------------------------------------------
-        FOLDER_TO_COMPANY = {
-            "Asterion_Systems": asterion,
-            "BluePeak_Industries": bluepeak,
-            "CinderLabs": cinderlabs,
-            "Northstar_Logistics": northstar,
-            "Redwood_Analytics": redwood,
-            "L3M0N_corp": lemon_co,
-        }
-
-        HIDDEN_NAMES = {
-            "flag.txt"
-        }
-
-        data_dir = os.path.join(BASE_DIR, "data")
-        for folder_name, company in FOLDER_TO_COMPANY.items():
-            folder_path = os.path.join(data_dir, folder_name)
-            if not os.path.isdir(folder_path):
-                continue
-
-            for filename in sorted(os.listdir(folder_path)):
-                file_path = os.path.join(folder_path, filename)
-                if not os.path.isfile(file_path):
-                    continue
-                if not filename.endswith(".txt"):
-                    continue
-
-                db.session.add(Report(
-                    company_id=company.id,
-                    report_name=filename,
-                    report_path=file_path,
-                    hidden=(filename in HIDDEN_NAMES),
-                ))
-
+        db.session.add_all(all_users)
         db.session.commit()
 
 # ---------------------------------------------------------------------------
@@ -247,6 +326,7 @@ def team():
             auditor_hash=user.id,
             company=user.company.name,
             role=user.role,
+            chief=user.chief,
             hash=current_user_id,
         )
 
@@ -337,7 +417,12 @@ def export_report(auditor_hash):
 
     if not rows:
         abort(404)
-
+    for row in rows:
+        if row["report_name"] == "flag.txt":
+            if target_user.role != "Chief Auditor":
+                return jsonify({
+                    "error": "This report is restricted to the Chief Auditor"
+                }), 403
     if len(rows) > 1:
         return jsonify([
             {"report_name": r["report_name"]} for r in rows
