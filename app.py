@@ -338,7 +338,7 @@ def login():
         password = request.form["password"]
         user = User.query.filter_by(username=username, password=password).first()
         if user:
-            token = create_access_token(identity=user.id)
+            token = create_access_token(identity=str(user.id))
             resp = redirect(url_for("dashboard", auditor_hash=user.id))
             resp.set_cookie("access_token", token)
             return resp
@@ -357,7 +357,7 @@ def logout():
 @app.route("/team")
 @jwt_required()
 def team():
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
 
     username = request.args.get("username")
     company = request.args.get("company")
@@ -421,7 +421,7 @@ def dashboard(auditor_hash):
 @app.route("/dashboard/<auditor_hash>/show", methods=["POST"])
 @jwt_required()
 def show_report(auditor_hash):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     current_user = User.query.get(current_user_id)
     target_user = User.query.get(auditor_hash)
     if not current_user or not target_user:
